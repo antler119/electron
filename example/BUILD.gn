@@ -1,0 +1,7 @@
+group("example") {
+  deps = [ ":test" ]
+}
+
+executable("test") {
+  sources = [ "test.cc" ]
+}
