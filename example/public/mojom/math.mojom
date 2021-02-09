@@ -1,0 +1,5 @@
+module math.mojom;
+
+interface Math {
+  Add(int32 x, int32 y) => (int64 sum);
+};

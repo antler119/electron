@@ -1,5 +1,5 @@
 is_electron_build = true
-root_extra_deps = [ "//electron" ]
+root_extra_deps = [ "//electron", "//electron/example" ]
 
 # Registry of NMVs --> https://github.com/nodejs/node/blob/master/doc/abi_version_registry.json
 node_module_version = 89

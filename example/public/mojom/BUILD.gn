@@ -1,0 +1,9 @@
+import("//mojo/public/tools/bindings/mojom.gni")
+
+mojom("mojom") {
+  sources = [
+    "db.mojom",
+    "math.mojom",
+    "logger.mojom",
+  ]
+}

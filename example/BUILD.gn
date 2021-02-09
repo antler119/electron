@@ -1,7 +1,46 @@
 group("example") {
-  deps = [ ":test" ]
+  deps = [
+    ":test",
+    ":test_mojo_client",
+    ":test_mojo_server",
+  ]
 }
 
 executable("test") {
-  sources = [ "test.cc" ]
+  sources = [
+    "logger_impl.cc",
+    "logger_impl.h",
+    "test.cc",
+  ]
+
+  deps = [
+    "//base",
+    "//electron/example/public/mojom",
+    "//mojo/core/embedder",
+  ]
+}
+
+executable("test_mojo_client") {
+  sources = [ "test_mojo_client.cc" ]
+
+  deps = [
+    "//base",
+    "//electron/example/public/mojom",
+    "//mojo/core/embedder",
+  ]
+}
+
+executable("test_mojo_server") {
+  sources = [
+    "logger_impl.cc",
+    "logger_impl.h",
+    "test_mojo_server.cc",
+    "test_mojo_server.h",
+  ]
+
+  deps = [
+    "//base",
+    "//electron/example/public/mojom",
+    "//mojo/core/embedder",
+  ]
 }

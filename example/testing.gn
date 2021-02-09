@@ -1,6 +1,0 @@
-root_extra_deps = [ "//electron/example" ]
-is_debug = true
-is_electron_build = true
-is_component_build = true
-is_official_build = false
-enable_desktop_capturer = false

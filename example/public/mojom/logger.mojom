@@ -1,0 +1,6 @@
+module logger.mojom;
+
+interface Logger {
+    Log(string message);
+    GetTail() => (string message);
+};
