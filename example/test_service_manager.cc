@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <cmath>
 #include <iostream>
 #include <string>
 
@@ -15,28 +13,6 @@
 
 #include "mojo/core/embedder/embedder.h"
 #include "mojo/core/embedder/scoped_ipc_support.h"
-
-#include "mojo/public/cpp/bindings/receiver.h"
-#include "mojo/public/cpp/bindings/remote.h"
-#include "mojo/public/cpp/platform/named_platform_channel.h"
-#include "mojo/public/cpp/system/invitation.h"
-
-#include "electron/example/public/mojom/math.mojom.h"
-
-class MathImpl : public math::mojom::Math {
- public:
-  explicit MathImpl(mojo::PendingReceiver<math::mojom::Math> receiver)
-      : receiver_(this, std::move(receiver)) {}
-
-  void Add(int32_t a,
-           int32_t b,
-           math::mojom::Math::AddCallback callback) override {
-    std::move(callback).Run(static_cast<int64_t>(a) + b);
-  }
-
- protected:
-  mojo::Receiver<math::mojom::Math> receiver_;
-};
 
 int main() {
   base::AtExitManager exit_manager;
@@ -63,14 +39,6 @@ int main() {
   mojo::core::ScopedIPCSupport ipc_support(
       ipc_thread.task_runner(),
       mojo::core::ScopedIPCSupport::ShutdownPolicy::CLEAN);
-
-  mojo::NamedPlatformChannel::Options options;
-  options.server_name = L"test";
-  mojo::NamedPlatformChannel named_channel(options);
-  mojo::ScopedMessagePipeHandle pipe = mojo::OutgoingInvitation::SendIsolated(
-      named_channel.TakeServerEndpoint());
-
-  MathImpl math(mojo::PendingReceiver<math::mojom::Math>(std::move(pipe)));
 
   run_loop.Run();
   return 0;

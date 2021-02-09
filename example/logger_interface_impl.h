@@ -6,8 +6,9 @@
 * @brief:
 **********************************************************************************************************************************************************************************************************************************
 **/
-#ifndef __LOGGER_IMPL__H__
-#define __LOGGER_IMPL__H__
+#ifndef __LOGGER_INTERFACE_IMPL__H__
+#define __LOGGER_INTERFACE_IMPL__H__
+
 #include <memory.h>
 #include <vector>
 
@@ -16,23 +17,24 @@
 
 #include "electron/example/public/mojom/logger.mojom.h"
 
-class LoggerImpl : public logger::mojom::Logger {
-public:
-  explicit LoggerImpl(mojo::PendingReceiver<logger::mojom::Logger> receiver,
-                      base::OnceClosure disconnect_handler);
-  ~LoggerImpl() override;
+class LoggerInterfaceImpl : public logger::mojom::Logger {
+ public:
+  explicit LoggerInterfaceImpl(
+      mojo::PendingReceiver<logger::mojom::Logger> receiver,
+      base::OnceClosure disconnect_handler);
+  ~LoggerInterfaceImpl() override;
 
-  void Log(const std::string &message) override;
+  void Log(const std::string& message) override;
   void GetTail(GetTailCallback callback) override;
 
   void OnError();
 
-protected:
+ protected:
   mojo::Receiver<logger::mojom::Logger> receiver_;
   std::vector<std::string> lines_;
 
-private:
-  DISALLOW_COPY_AND_ASSIGN(LoggerImpl);
+ private:
+  DISALLOW_COPY_AND_ASSIGN(LoggerInterfaceImpl);
 };
 
-#endif //!__LOGGER_IMPL__H__
+#endif  //!__LOGGER_INTERFACE_IMPL__H__

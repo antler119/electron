@@ -1,0 +1,13 @@
+{
+    "name": "logger_service",
+    "display_name": "Logger Service",
+    "interface_provider_specs": {
+        "service_manager:connector": {
+            "provides": {
+                "test": [
+                    "logger.mojom.Logger"
+                ]
+            }
+        }
+    }
+}

@@ -3,13 +3,14 @@ group("example") {
     ":test",
     ":test_mojo_client",
     ":test_mojo_server",
+    ":test_service_manager",
   ]
 }
 
 executable("test") {
   sources = [
-    "logger_impl.cc",
-    "logger_impl.h",
+    "logger_interface_impl.cc",
+    "logger_interface_impl.h",
     "test.cc",
   ]
 
@@ -32,8 +33,6 @@ executable("test_mojo_client") {
 
 executable("test_mojo_server") {
   sources = [
-    "logger_impl.cc",
-    "logger_impl.h",
     "test_mojo_server.cc",
     "test_mojo_server.h",
   ]
@@ -42,5 +41,20 @@ executable("test_mojo_server") {
     "//base",
     "//electron/example/public/mojom",
     "//mojo/core/embedder",
+  ]
+}
+
+executable("test_service_manager") {
+  sources = [
+    "logger_interface_impl.cc",
+    "logger_interface_impl.h",
+    "logger_service_impl.cc",
+    "logger_service_impl.h",
+    "test_service_manager.cc",
+  ]
+
+  deps = [
+    "//electron/example/public/mojom",
+    "//services/service_manager",
   ]
 }

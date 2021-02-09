@@ -15,7 +15,7 @@
 
 #include "mojo/public/cpp/bindings/remote.h"
 
-#include "logger_impl.h"
+#include "electron/example/logger_interface_impl.h"
 
 int Floor(float f) {
   std::cout << "tid: " << std::this_thread::get_id() << std::endl;
@@ -70,7 +70,8 @@ int main() {
   //   std::cout << "end: " << std::endl;
 
   mojo::Remote<logger::mojom::Logger> logger;
-  LoggerImpl impl(logger.BindNewPipeAndPassReceiver(), run_loop.QuitClosure());
+  LoggerInterfaceImpl impl(logger.BindNewPipeAndPassReceiver(),
+                           run_loop.QuitClosure());
 
   logger->Log("OK cool");
   logger.reset();
