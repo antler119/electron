@@ -50,6 +50,8 @@ executable("test_service_manager") {
     "logger_interface_impl.h",
     "logger_service_impl.cc",
     "logger_service_impl.h",
+    "service_manifest.cc",
+    "service_manifest.h",
     "test_service_manager.cc",
   ]
 

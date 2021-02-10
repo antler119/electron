@@ -14,6 +14,10 @@
 #include "mojo/core/embedder/embedder.h"
 #include "mojo/core/embedder/scoped_ipc_support.h"
 
+#include "services/service_manager/background_service_manager.h"
+
+#include "electron/example/service_manifest.h"
+
 int main() {
   base::AtExitManager exit_manager;
 
@@ -28,8 +32,6 @@ int main() {
   base::SingleThreadTaskExecutor main_thread_task_executor(
       base::MessagePumpType::IO);
 
-  base::RunLoop run_loop;
-
   mojo::core::Init();
 
   base::Thread ipc_thread("ipc");
@@ -39,6 +41,11 @@ int main() {
   mojo::core::ScopedIPCSupport ipc_support(
       ipc_thread.task_runner(),
       mojo::core::ScopedIPCSupport::ShutdownPolicy::CLEAN);
+
+  service_manager::BackgroundServiceManager background_service_manager(
+      GetTestManifests());
+
+  base::RunLoop run_loop;
 
   run_loop.Run();
   return 0;
