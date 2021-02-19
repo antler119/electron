@@ -1,9 +1,12 @@
+import("//services/service_manager/public/cpp/service_executable.gni")
+
 group("example") {
+  testonly = true
   deps = [
+    ":logger_service_main",
     ":test",
-    ":test_mojo_client",
-    ":test_mojo_server",
     ":test_service_manager",
+    ":test_service_manager2",
   ]
 }
 
@@ -21,30 +24,8 @@ executable("test") {
   ]
 }
 
-executable("test_mojo_client") {
-  sources = [ "test_mojo_client.cc" ]
-
-  deps = [
-    "//base",
-    "//electron/example/public/mojom",
-    "//mojo/core/embedder",
-  ]
-}
-
-executable("test_mojo_server") {
-  sources = [
-    "test_mojo_server.cc",
-    "test_mojo_server.h",
-  ]
-
-  deps = [
-    "//base",
-    "//electron/example/public/mojom",
-    "//mojo/core/embedder",
-  ]
-}
-
 executable("test_service_manager") {
+  testonly = true
   sources = [
     "logger_interface_impl.cc",
     "logger_interface_impl.h",
@@ -56,7 +37,58 @@ executable("test_service_manager") {
   ]
 
   deps = [
+    "//base",
+    "//base:base_static",
     "//electron/example/public/mojom",
     "//services/service_manager",
+    "//services/service_manager/tests:interfaces",
+  ]
+
+  data_deps = [
+    ":logger_service_main",
+    "//services/service_manager/tests:background_service_manager_test_service",
+  ]
+}
+
+executable("test_service_manager2") {
+  testonly = true
+  sources = [
+    "logger_interface_impl.cc",
+    "logger_interface_impl.h",
+    "logger_service_impl.cc",
+    "logger_service_impl.h",
+    "service_manifest.cc",
+    "service_manifest.h",
+    "test_service_manager2.cc",
+  ]
+
+  deps = [
+    "//base",
+    "//base:base_static",
+    "//electron/example/public/mojom",
+    "//services/service_manager",
+    "//services/service_manager/tests:interfaces",
+  ]
+
+  data_deps = [
+    ":logger_service_main",
+    "//services/service_manager/tests:background_service_manager_test_service",
+  ]
+}
+
+service_executable("logger_service_main") {
+  output_name = "logger_service"
+
+  sources = [
+    "logger_interface_impl.cc",
+    "logger_interface_impl.h",
+    "logger_service_impl.cc",
+    "logger_service_impl.h",
+    "logger_service_main.cc",
+  ]
+
+  deps = [
+    "//electron/example/public/mojom",
+    "//services/service_manager/public/cpp/service_executable:main",
   ]
 }

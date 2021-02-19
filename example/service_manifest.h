@@ -13,8 +13,13 @@
 
 #include "services/service_manager/public/cpp/manifest.h"
 
+extern const char kDummyService[];
+
 extern const char kLoggerService[];
 extern const char kLoggerCapability[];
+
+extern const char kBackgroundTestService[];
+extern const char kBackgroundTestCapability[];
 
 const std::vector<service_manager::Manifest>& GetManifests();
 

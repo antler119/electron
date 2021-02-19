@@ -73,7 +73,7 @@ int main() {
   logging::LoggingSettings settings;
   settings.logging_dest = logging::LOG_TO_ALL;
   settings.delete_old = logging::DELETE_OLD_LOG_FILE;
-  settings.log_file_path = FILE_PATH_LITERAL("test_service_manager.log");
+  settings.log_file_path = FILE_PATH_LITERAL("test_service_manager2.log");
   logging::InitLogging(settings);
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
@@ -121,7 +121,6 @@ int main() {
   LOG(INFO) << "START";
   base::RunLoop run_loop;
 
-  logger_service->Log("TEST");
   logger_service->GetTail(
       base::BindOnce(&ReceiveGetTail, base::BindOnce([] {})));
 

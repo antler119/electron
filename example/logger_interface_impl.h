@@ -13,24 +13,23 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "mojo/public/cpp/bindings/remote.h"
 
 #include "electron/example/public/mojom/logger.mojom.h"
 
+#include "mojo/public/cpp/bindings/receiver_set.h"
+#include "mojo/public/cpp/bindings/remote.h"
+
 class LoggerInterfaceImpl : public logger::mojom::Logger {
  public:
-  explicit LoggerInterfaceImpl(
-      mojo::PendingReceiver<logger::mojom::Logger> receiver,
-      base::OnceClosure disconnect_handler);
+  explicit LoggerInterfaceImpl();
+
   ~LoggerInterfaceImpl() override;
 
   void Log(const std::string& message) override;
   void GetTail(GetTailCallback callback) override;
 
-  void OnError();
-
  protected:
-  mojo::Receiver<logger::mojom::Logger> receiver_;
+  mojo::ReceiverSet<logger::mojom::Logger> receivers_;
   std::vector<std::string> lines_;
 
  private:
